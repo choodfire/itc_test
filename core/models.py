@@ -33,10 +33,26 @@ class Applicant(models.Model):
     )
     phone = models.IntegerField(
         'Номер телефона',
+        null=True,
     )
-    health_status = models.CharField(  # todo: textfield?
+    health_status = models.CharField(
         'Описания состояния здоровья',
         max_length=255,
+        null=True,
+        default='Практически здоров',
+        help_text='Аллергоанамнез, хранические заболевания и т.п.',
+    )
+    GENDER_CHOICES = [
+        ('М', 'Мужской'),
+        ('Ж', 'Женский'),
+    ]
+    gender = models.CharField(
+        max_length=1,
+        choices=GENDER_CHOICES,
+    )
+    image = models.ImageField(  # todo check
+        'Изображение',
+        upload_to='images/',
     )
 
     def __str__(self):
@@ -55,6 +71,9 @@ class Appeal(models.Model):
     )
     number = models.IntegerField(
         'Номер обращения',
+        db_index=True,
+        editable=False,
+        unique=True,
     )
     applicant = models.ForeignKey(  # От одного заявителя может быть много обращений
         Applicant,
@@ -63,6 +82,25 @@ class Appeal(models.Model):
     )
     emergency_services = models.ManyToManyField(  # Одно обращение - одна или более экстренных служб
         EmergencyService,
+    )
+    in_progress = 'В работе'
+    finished = 'Завершено'
+    STATUS_CHOICES = [
+        (in_progress, in_progress),
+        (finished, finished),
+    ]
+    status = models.CharField(
+        'Статус обращения',
+        max_length=9,
+        choices=STATUS_CHOICES,
+        default=in_progress,
+    )
+    victims_number = models.IntegerField(
+        'Число пострадавших',
+    )
+    do_not_call = models.BooleanField(
+        'Не звонить',
+        default=False,
     )
 
     def __str__(self):
