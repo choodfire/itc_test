@@ -30,3 +30,59 @@ appeal.emergency_services.add(es1)
 
 appeal = Appeal.objects.get(id=2)
 appeal.emergency_services.set([es1,es2,es3])
+
+
+
+Запросы к бд
+1
+Applicant.objects.get(id=1)
+Applicant.objects.get(id__exact=1)
+Applicant.objects.get(pk=1)
+
+2
+a = Applicant.objects.get(id=1)
+Appeal.objects.filter(applicant=a)
+a.applicants.all()
+
+3
+EmergencyService.objects.all()[:3]
+
+4
+Applicant.objects.all().order_by('-id')[:5]
+
+5
+Appeal.objects.earliest('date')
+Appeal.objects.latest('date')
+
+Appeal.objects.order_by('date').first()
+Appeal.objects.order_by('date').last()
+
+6
+Appeal.objects.all()[1::2]
+
+7 - 2 запроса
+reset_queries()
+len(connection.queries)
+0
+for i in a.iterator():
+    print(i)
+...
+1
+2
+3
+len(connection.queries)
+1
+for i in a.iterator():
+    print(i)
+...
+1
+2
+3
+len(connection.queries)
+2
+
+8
+Appeal.objects.count()
+
+9
+Appeal.objects.order_by('?').first()
