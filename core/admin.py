@@ -3,7 +3,7 @@ from core.models import Appeal, Applicant, EmergencyService
 
 
 class AppealAdmin(admin.ModelAdmin):
-    list_display = ('id', 'status', 'date')
+    list_display = ('id', 'status', 'date', 'number')
     sortable_by = ('date', )
     empty_value_display = '-empty-'
     list_filter = ('date', )
@@ -20,7 +20,7 @@ class ApplicantAdmin(admin.ModelAdmin):
     list_filter = ('phone', )
     search_fields = ('health_status',)
     search_help_text = 'Поиск по состоянию здоровья'
-    readonly_fields = ('full_name',)
+    readonly_fields = ('image',)
     empty_value_display = '-empty-'
 
     def get_author(self, obj):
