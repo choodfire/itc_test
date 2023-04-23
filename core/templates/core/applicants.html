@@ -1,0 +1,26 @@
+<h1>Пострадавшие</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Имя</th>
+    <th>День Рождения</th>
+    <th>Состояние здоровья</th>
+    <th>Пол</th>
+    <th>Телефон</th>
+    <th>Фото</th>
+  </tr>
+  {% for object in object_list %}
+      <tr>
+        <th>{{ object.id }}</th>
+        <th><a href="{% url 'core:applicant_detail' pk=object.id %}">{{ object.full_name }}</a></th>
+        <th>{{ object.birthday }}</th>
+        <th>{{ object.health_status }}</th>
+        <th>{{ object.gender }}</th>
+        <th>{{ object.phone }}</th>
+        <th>{{ object.image | default:"Пока нет" }}</th>
+      </tr>
+  {% empty %}
+      <h2>Пострадавших нет</h2>
+  {% endfor %}
+</table>

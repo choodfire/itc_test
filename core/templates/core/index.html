@@ -1,0 +1,14 @@
+<h1>Представления:</h1>
+
+<p><a href="{% url 'core:first' %}">Первое</a></p>
+<p><a href="{% url 'core:second' pk=1 %}">Второе</a></p>
+<p><a href="{% url 'core:third' %}">Третье</a></p>
+<p><a href="{% url 'core:fourth' %}">Четвертое</a></p>
+<p><a href="{% url 'core:fifth' %}?phone=12312312&data=some+important+data">Пятое</a></p>
+<p><a href="{% url 'core:sixth' %}?phone=12312312&data=some+important+data">Шестое</a></p>
+
+<h1>Дополнительно:</h1>
+
+<p><a href="{% url 'core:appeals' %}">Объекты обращения</a></p>
+<p><a href="{% url 'core:applicants' %}">Объекты обращающихся</a></p>
+<p><a href="{% url 'core:services' %}">Объекты служб</a></p>

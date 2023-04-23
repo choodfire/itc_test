@@ -1,0 +1,20 @@
+<h1>Экстренные службы</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Название</th>
+    <th>Код службы</th>
+    <th>Телефон</th>
+  </tr>
+  {% for object in object_list %}
+      <tr>
+        <th>{{ object.id }}</th>
+        <th><a href="{% url 'core:service_detail' pk=object.id %}">{{ object.title }}</a></th>
+        <th>{{ object.service_code }}</th>
+        <th>{{ object.phone }}</th>
+      </tr>
+  {% empty %}
+      <h2>Служб пока нет</h2>
+  {% endfor %}
+</table>

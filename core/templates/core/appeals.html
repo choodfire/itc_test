@@ -1,0 +1,26 @@
+<h1>Обращения</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Дата</th>
+    <th>Обратившийся</th>
+    <th>Можно ли звонить</th>
+    <th>Статус</th>
+    <th>Количество пострадавших</th>
+    <th>Номер</th>
+  </tr>
+  {% for object in object_list %}
+      <tr>
+        <th><a href="{% url 'core:appeal_detail' pk=object.id %}">{{ object.id }}</a></th>
+        <th>{{ object.date }}</th>
+        <th>{{ object.applicant.full_name }}</th>
+        <th>{{ object.do_not_call }}</th>
+        <th>{{ object.status }}</th>
+        <th>{{ object.victims_number }}</th>
+        <th>{{ object.number }}</th>
+      </tr>
+  {% empty %}
+      <h2>Обращений пока нет</h2>
+  {% endfor %}
+</table>

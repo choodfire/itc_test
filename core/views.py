@@ -1,6 +1,6 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
-from django.views.generic import TemplateView, DetailView
-from .models import Appeal, Applicant
+from django.views.generic import TemplateView, DetailView, ListView
+from .models import Appeal, Applicant, EmergencyService
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -83,3 +83,40 @@ class SixthView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         return JsonResponse({'data': self.request.GET.dict()})
+
+
+class AppealsView(ListView):
+    model = Appeal
+    template_name = 'core/appeals.html'
+
+    def get_queryset(self):
+        return Appeal.objects.all().select_related('applicant')  # Для вывода полного имени, а не id обратившегося
+
+
+class AppealDetailView(DetailView):
+    model = Appeal
+    template_name = 'core/appeal_detail.html'
+
+
+class ApplicantsView(ListView):
+    model = Applicant
+    template_name = 'core/applicants.html'
+
+
+class ApplicantDetailView(DetailView):
+    model = Applicant
+    template_name = 'core/applicant_detail.html'
+
+
+class ServicesView(ListView):
+    model = EmergencyService
+    template_name = 'core/services.html'
+
+
+class ServiceDetailView(DetailView):
+    model = EmergencyService
+    template_name = 'core/service_detail.html'
+
+
+class Index(TemplateView):
+    template_name = 'core/index.html'
