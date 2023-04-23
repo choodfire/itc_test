@@ -1,11 +1,11 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
-from django.views.generic import TemplateView, DetailView, ListView
+from django.urls import reverse
+from django.views.generic import TemplateView, DetailView, ListView, UpdateView, CreateView
 from .models import Appeal, Applicant, EmergencyService
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.db.models import Avg
-
+from .forms import *
+import datetime
 
 class FirstView(TemplateView):
     template_name = 'core/first.html'
@@ -128,3 +128,58 @@ class ServiceDetailView(DetailView):
 
 class Index(TemplateView):
     template_name = 'core/index.html'
+
+
+class AppealUpdateView(UpdateView):
+    model = Appeal
+    template_name = 'core/update.html'
+    form_class = AppealForm
+
+    def get_success_url(self):
+        return reverse('core:appeals')
+
+
+class ApplicantUpdateView(UpdateView):
+    model = Applicant
+    template_name = 'core/update.html'
+    form_class = ApplicantForm
+
+    def get_success_url(self):
+        return reverse('core:applicants')
+
+
+class ServiceUpdateView(UpdateView):
+    model = EmergencyService
+    template_name = 'core/update.html'
+    form_class = EmergencyServiceForm
+
+    def get_success_url(self):
+        return reverse('core:services')
+
+
+class ServiceCreateView(CreateView):
+    form_class = EmergencyServiceForm
+    template_name = 'core/create.html'
+    model = EmergencyService
+
+    def get_success_url(self):
+        return reverse('core:services')
+
+
+class ApplicantCreateView(CreateView):
+    form_class = ApplicantForm
+    template_name = 'core/create.html'
+    model = Applicant
+
+    def get_success_url(self):
+        return reverse('core:applicants')
+
+
+class AppealCreateView(CreateView):
+    form_class = AppealForm
+    template_name = 'core/create.html'
+    model = Appeal
+
+    def get_success_url(self):
+        return reverse('core:appeals')
+
