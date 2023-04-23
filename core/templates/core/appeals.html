@@ -1,6 +1,11 @@
 {% extends 'main.html' %}
 {% block content %}
 
+<form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+</form>
+
 {% if object_list.count > 0 %}
     <h1>Обращения</h1>
     <table>

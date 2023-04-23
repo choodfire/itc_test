@@ -1,11 +1,13 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.generic import TemplateView, DetailView, ListView, UpdateView, CreateView
+import core.filters
 from .models import Appeal, Applicant, EmergencyService
 from django.http import JsonResponse
 from django.db.models import Avg
 from .forms import *
 import datetime
+from .filters import *
 
 class FirstView(TemplateView):
     template_name = 'core/first.html'
@@ -38,11 +40,10 @@ class SecondView(TemplateView):
     #     return context
 
 
-
-
 class ThirdView(TemplateView):
     def get(self, request, *args, **kwargs):
         return redirect("https://www.google.com")
+
 
 class FourthView(TemplateView):
     template_name = 'core/fourth.html'
@@ -90,13 +91,20 @@ class AppealsView(ListView):
     model = Appeal
     template_name = 'core/appeals.html'
 
+    def get_filters(self):
+        a = core.filters.AppealFilter(self.request.GET)
+        return a
+
     def get_queryset(self):
-        return Appeal.objects.all().select_related('applicant').prefetch_related('emergency_services')
-        # return Appeal.objects.all().select_related('applicant').prefetch_related('emergency_services').values('id', 'emergency_services__title', 'date', 'do_not_call', 'status', 'victims_number', 'number')
+        return self.get_filters().qs
+
+    # def get_queryset(self):
+    #     return Appeal.objects.all().select_related('applicant').prefetch_related('emergency_services')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['average'] = Appeal.objects.aggregate(Avg('emergency_services'))['emergency_services__avg']\
+        context['average'] = Appeal.objects.aggregate(Avg('emergency_services'))['emergency_services__avg']
+        context['filter'] = AppealFilter(self.request.GET)
 
         return context
 
@@ -109,6 +117,20 @@ class AppealDetailView(DetailView):
 class ApplicantsView(ListView):
     model = Applicant
     template_name = 'core/applicants.html'
+
+    def get_filters(self):
+        return core.filters.ApplicantFilter(self.request.GET)
+
+    def get_queryset(self):
+        return self.get_filters().qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        filterr = ApplicantFilter(self.request.GET)
+        context['filter'] = filterr
+
+        return context
+
 
 
 class ApplicantDetailView(DetailView):
@@ -182,4 +204,3 @@ class AppealCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('core:appeals')
-
