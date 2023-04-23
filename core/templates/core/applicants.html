@@ -1,26 +1,49 @@
-<h1>Пострадавшие</h1>
+{% extends 'main.html' %}
+{% block content %}
 
-<table>
-  <tr>
-    <th>Id</th>
-    <th>Имя</th>
-    <th>День Рождения</th>
-    <th>Состояние здоровья</th>
-    <th>Пол</th>
-    <th>Телефон</th>
-    <th>Фото</th>
-  </tr>
-  {% for object in object_list %}
+{% if object_list.count > 0 %}
+    <h1>Заявители</h1>
+    <table>
       <tr>
-        <th>{{ object.id }}</th>
-        <th><a href="{% url 'core:applicant_detail' pk=object.id %}">{{ object.full_name }}</a></th>
-        <th>{{ object.birthday }}</th>
-        <th>{{ object.health_status }}</th>
-        <th>{{ object.gender }}</th>
-        <th>{{ object.phone }}</th>
-        <th>{{ object.image | default:"Пока нет" }}</th>
+        <th>Forloop</th>
+        <th>Id</th>
+        <th>Имя</th>
+        <th>День Рождения</th>
+        <th>Состояние здоровья</th>
+        <th>Пол</th>
+        <th>Телефон</th>
+        <th>Фото</th>
       </tr>
-  {% empty %}
-      <h2>Пострадавших нет</h2>
-  {% endfor %}
-</table>
+      {% for object in object_list %}
+          {% if forloop.first or forloop.last %}
+              <tr>
+                <th style="color:red">{{ forloop.counter }}</th>
+                <th style="color:red">{{ object.id | default:"-" | default_if_none:"-" }}</th>
+                <th style="color:red"><a href="{% url 'core:applicant_detail' pk=object.id %}">{{ object.full_name | lower | title | default:"-" | default_if_none:"-" }}</a></th>
+                <th style="color:red">{{ object.birthday | default:"-" | default_if_none:"-" | date }}</th>
+                <th style="color:red">{{ object.health_status | default:"-" | default_if_none:"-" }}</th>
+                <th style="color:red">{{ object.gender | default:"-" | default_if_none:"-" | upper }}</th>
+                <th style="color:red">{{ object.phone | default:"-" | default_if_none:"-" }}</th>
+                <th style="color:red">{{ object.image | default:"-" | default_if_none:"-" }}</th>
+              </tr>
+          {% else %}
+              <tr>
+                <th>{{ forloop.counter }}</th>
+                <th>{{ object.id | default:"-" | default_if_none:"-" }}</th>
+                <th><a href="{% url 'core:applicant_detail' pk=object.id %}">{{ object.full_name | lower | title | default:"-" | default_if_none:"-" }}</a></th>
+                <th>{{ object.birthday | default:"-" | default_if_none:"-" | date }}</th>
+                <th>{{ object.health_status | default:"-" | default_if_none:"-" }}</th>
+                <th>{{ object.gender | default:"-" | default_if_none:"-" }}</th>
+                <th>{{ object.phone | default:"-" | default_if_none:"-" }}</th>
+                <th>{{ object.image | default:"-" | default_if_none:"-" }}</th>
+              </tr>
+          {% endif %}
+      {% empty %}
+          <h2>Пострадавших нет</h2>
+      {% endfor %}
+    </table>
+{% else %}
+    <h1>Нет заявителей</h1>
+{% endif %}
+
+{% endblock content %}

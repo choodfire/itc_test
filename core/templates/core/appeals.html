@@ -1,26 +1,49 @@
-<h1>Обращения</h1>
+{% extends 'main.html' %}
+{% block content %}
 
-<table>
-  <tr>
-    <th>Id</th>
-    <th>Дата</th>
-    <th>Обратившийся</th>
-    <th>Можно ли звонить</th>
-    <th>Статус</th>
-    <th>Количество пострадавших</th>
-    <th>Номер</th>
-  </tr>
-  {% for object in object_list %}
+{% if object_list.count > 0 %}
+    <h1>Обращения</h1>
+    <table>
       <tr>
-        <th><a href="{% url 'core:appeal_detail' pk=object.id %}">{{ object.id }}</a></th>
-        <th>{{ object.date }}</th>
-        <th>{{ object.applicant.full_name }}</th>
-        <th>{{ object.do_not_call }}</th>
-        <th>{{ object.status }}</th>
-        <th>{{ object.victims_number }}</th>
-        <th>{{ object.number }}</th>
+        <th>Id</th>
+        <th>Дата</th>
+        <th>Время с обращения</th>
+        <th>Обратившийся</th>
+        <th>Можно ли звонить</th>
+        <th>Статус</th>
+        <th>Количество пострадавших</th>
+        <th>Номер</th>
+        <th>Назначенные службы</th>
       </tr>
-  {% empty %}
-      <h2>Обращений пока нет</h2>
-  {% endfor %}
-</table>
+      {% for object in object_list %}
+          <tr>
+            <th><a href="{% url 'core:appeal_detail' pk=object.id %}">{{ object.id }}</a></th>
+            <th>{{ object.date | date }}</th>
+            <th>{{ object.date | timesince }}</th>
+            <th>{{ object.applicant.full_name }}</th>
+            <th>{{ object.do_not_call | yesno }}</th>
+            <th>{{ object.status }}</th>
+            <th>{{ object.victims_number }}</th>
+            <th>{{ object.number }}</th>
+            <th>
+            {% for es in object.emergency_services.all %}
+                {{ es.title | upper }}
+            {% empty %}
+                Службы не назначены
+            {% endfor %}
+            </th>
+{#            <th>{{ object.emergency_services.all }}</th>#}
+{#            <th>{{ object.emergency_services__title }}</th>#}
+          </tr>
+      {% empty %}
+          <h2>Обращений пока нет</h2>
+      {% endfor %}
+    </table>
+
+    <h3>Среднее количество вызванных служб - {{ average | floatformat:'0' }}</h3>
+    <h3>Количество обращений - {{ object_list | length }}</h3>
+{% else %}
+    <h1>Нет обращений</h1>
+{% endif %}
+
+{% endblock content %}

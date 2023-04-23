@@ -1,3 +1,6 @@
+{% extends 'main.html' %}
+{% block content %}
+
 <h1>Представления:</h1>
 
 <p><a href="{% url 'core:first' %}">Первое</a></p>
@@ -10,5 +13,7 @@
 <h1>Дополнительно:</h1>
 
 <p><a href="{% url 'core:appeals' %}">Объекты обращения</a></p>
-<p><a href="{% url 'core:applicants' %}">Объекты обращающихся</a></p>
+<p><a href="{% url 'core:applicants' %}">Объекты заявителей</a></p>
 <p><a href="{% url 'core:services' %}">Объекты служб</a></p>
+
+{% endblock content %}

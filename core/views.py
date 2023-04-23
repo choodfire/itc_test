@@ -4,6 +4,7 @@ from .models import Appeal, Applicant, EmergencyService
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.db.models import Avg
 
 
 class FirstView(TemplateView):
@@ -90,7 +91,14 @@ class AppealsView(ListView):
     template_name = 'core/appeals.html'
 
     def get_queryset(self):
-        return Appeal.objects.all().select_related('applicant')  # Для вывода полного имени, а не id обратившегося
+        return Appeal.objects.all().select_related('applicant').prefetch_related('emergency_services')
+        # return Appeal.objects.all().select_related('applicant').prefetch_related('emergency_services').values('id', 'emergency_services__title', 'date', 'do_not_call', 'status', 'victims_number', 'number')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['average'] = Appeal.objects.aggregate(Avg('emergency_services'))['emergency_services__avg']\
+
+        return context
 
 
 class AppealDetailView(DetailView):
