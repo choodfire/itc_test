@@ -1,6 +1,7 @@
 import django_filters
 from django_filters import FilterSet
 from .models import *
+from .consts import STATUS_CHOICES
 
 
 class ApplicantFilter(FilterSet):
@@ -20,7 +21,7 @@ class AppealFilter(FilterSet):
     first_name = django_filters.CharFilter(field_name='applicant__first_name', lookup_expr='icontains')
     last_name = django_filters.CharFilter(field_name='applicant__last_name', lookup_expr='icontains')
     service_code = django_filters.CharFilter(field_name='emergency_services__service_code', lookup_expr='exact')
-    status = django_filters.CharFilter(field_name='status', lookup_expr='exact')
+    status = django_filters.ChoiceFilter(field_name='status', choices=STATUS_CHOICES)
 
     class Meta:
         model = Appeal
