@@ -10,7 +10,7 @@ class EmergencyService(models.Model):
         'Код службы',
         max_length=30,
     )
-    phone = models.IntegerField(
+    phone = models.PositiveBigIntegerField(
         'Номер телефона',
     )
 
@@ -20,7 +20,7 @@ class EmergencyService(models.Model):
     class Meta:
         ordering = ['service_code']
         verbose_name = 'Экстренная служба'
-        verbose_name_plural = 'Экстренная служба'
+        verbose_name_plural = 'Экстренные службы'
 
 
 class Applicant(models.Model):
@@ -31,7 +31,7 @@ class Applicant(models.Model):
     birthday = models.DateField(
         'День рождения',
     )
-    phone = models.IntegerField(
+    phone = models.PositiveBigIntegerField(
         'Номер телефона',
         null=True,
     )
@@ -50,7 +50,7 @@ class Applicant(models.Model):
         max_length=1,
         choices=GENDER_CHOICES,
     )
-    image = models.ImageField(  # todo check
+    image = models.ImageField(
         'Изображение',
         upload_to='images/',
     )
@@ -69,7 +69,7 @@ class Appeal(models.Model):
         'Дата обращения',
         auto_now=True,
     )
-    number = models.IntegerField(
+    number = models.PositiveIntegerField(
         'Номер обращения',
         db_index=True,
         editable=False,
@@ -95,7 +95,7 @@ class Appeal(models.Model):
         choices=STATUS_CHOICES,
         default=in_progress,
     )
-    victims_number = models.IntegerField(
+    victims_number = models.PositiveIntegerField(
         'Число пострадавших',
     )
     do_not_call = models.BooleanField(
