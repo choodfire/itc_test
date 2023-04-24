@@ -92,8 +92,7 @@ class AppealsView(ListView):
     template_name = 'core/appeals.html'
 
     def get_filters(self):
-        a = core.filters.AppealFilter(self.request.GET)
-        return a
+        return core.filters.AppealFilter(self.request.GET)
 
     def get_queryset(self):
         return self.get_filters().qs

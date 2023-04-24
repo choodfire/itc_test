@@ -94,7 +94,7 @@ from core.models import *
 import datetime
 from utildate.relativedelta import relativedelta
 from django.db import connection, reset_queries
-from django.db.models import Count
+from django.db.models import Count, Avg, Sum
 
 1
 Appeal.objects.filter(applicant_id=1)  # .first если одно
