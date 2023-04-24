@@ -4,12 +4,12 @@ from . import views
 app_name = 'core'
 
 urlpatterns = [
-    path('first/', views.FirstView.as_view(), name='first'),
-    path('second/<int:pk>/', views.SecondView.as_view(), name='second'),
-    path('third/', views.ThirdView.as_view(), name='third'),
-    path('fourth/', views.FourthView.as_view(), name='fourth'),
-    path('fifth/', views.FifthView.as_view(), name='fifth'),
-    path('sixth/<int:pk>', views.SixthView.as_view(), name='sixth'),
+    path('first/', views.AppealsCountView.as_view(), name='first'),
+    path('second/<int:pk>/', views.ApplicantPhoneNumberView.as_view(), name='second'),
+    path('third/', views.RedirectView.as_view(), name='third'),
+    path('fourth/', views.RequestDataView.as_view(), name='fourth'),
+    path('fifth/', views.ApplicantDataView.as_view(), name='fifth'),
+    path('sixth/<int:pk>', views.ApplicantDataJSONView.as_view(), name='sixth'),
 
     path('appeals/', views.AppealsView.as_view(), name='appeals'),
     path('appeals/create/', views.AppealCreateView.as_view(), name='appeals_create'),

@@ -10,7 +10,7 @@ from .filters import *
 from django.core import serializers
 
 
-class FirstView(TemplateView):
+class AppealsCountView(TemplateView):
     """
     Отображает количество происшествий, 404 если их нет
     """
@@ -24,7 +24,10 @@ class FirstView(TemplateView):
         return context
 
 
-class SecondView(TemplateView):
+class ApplicantPhoneNumberView(TemplateView):
+    """
+    Отображает номер телефона заявителя по id, 404 если заявителя нет
+    """
     template_name = 'core/second.html'
 
     def get_context_data(self, **kwargs):
@@ -36,12 +39,18 @@ class SecondView(TemplateView):
         return context
 
 
-class ThirdView(TemplateView):
+class RedirectView(TemplateView):
+    """
+    Перенаправляет на другую страницу
+    """
     def get(self, request, *args, **kwargs):
         return redirect("https://www.google.com")
 
 
-class FourthView(TemplateView):
+class RequestDataView(TemplateView):
+    """
+    Отображает данные запроса
+    """
     template_name = 'core/fourth.html'
 
     def get_context_data(self, **kwargs):
@@ -66,7 +75,10 @@ class FourthView(TemplateView):
         return context
 
 
-class FifthView(TemplateView):
+class ApplicantDataView(TemplateView):
+    """
+    Отображает данные заявителя по id
+    """
     template_name = 'core/fifth.html'
 
     def get_context_data(self, **kwargs):
@@ -79,7 +91,10 @@ class FifthView(TemplateView):
         return context
 
 
-class SixthView(TemplateView):
+class ApplicantDataJSONView(TemplateView):
+    """
+    Отображает данные заявителя по id в формате JSON
+    """
     template_name = 'core/sixth.html'
 
     def get(self, request, *args, **kwargs):
