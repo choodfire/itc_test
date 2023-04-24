@@ -1,4 +1,4 @@
-from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
+from django.shortcuts import get_list_or_404, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, DetailView, ListView, UpdateView, CreateView
 import core.filters
@@ -6,11 +6,13 @@ from .models import Appeal, Applicant, EmergencyService
 from django.http import JsonResponse
 from django.db.models import Avg
 from .forms import *
-import datetime
 from .filters import *
 
 
-class FirstView(TemplateView):  # Отображает количество происшествий, 404 если их нет
+class FirstView(TemplateView):
+    """
+    Отображает количество происшествий, 404 если их нет
+    """
     template_name = 'core/first.html'
 
     def get_context_data(self, **kwargs):
@@ -21,7 +23,7 @@ class FirstView(TemplateView):  # Отображает количество пр
         return context
 
 
-class SecondView(TemplateView):  #
+class SecondView(TemplateView):
     template_name = 'core/second.html'
 
     def get_context_data(self, **kwargs):

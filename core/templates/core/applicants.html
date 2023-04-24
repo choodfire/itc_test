@@ -12,7 +12,9 @@
       <tr>
         <th>Forloop</th>
         <th>Id</th>
+        <th>Фамилия</th>
         <th>Имя</th>
+        <th>Отчество</th>
         <th>День Рождения</th>
         <th>Состояние здоровья</th>
         <th>Пол</th>
@@ -24,7 +26,9 @@
               <tr>
                 <th style="color:red">{{ forloop.counter }}</th>
                 <th style="color:red">{{ object.id | default:"-" | default_if_none:"-" }}</th>
-                <th style="color:red"><a href="{% url 'core:applicant_detail' pk=object.id %}">{{ object.full_name | lower | title | default:"-" | default_if_none:"-" }}</a></th>
+                <th style="color:red">{{ object.middle_name | lower | title | default:"-" | default_if_none:"-" }}</th>
+                <th style="color:red"><a href="{% url 'core:applicant_detail' pk=object.id %}">{{ object.first_name | lower | title | default:"-" | default_if_none:"-" }}</a></th>
+                <th style="color:red">{{ object.last_name | lower | title | default:"-" | default_if_none:"-" }}</th>
                 <th style="color:red">{{ object.birthday | default:"-" | default_if_none:"-" | date }}</th>
                 <th style="color:red">{{ object.health_status | default:"-" | default_if_none:"-" }}</th>
                 <th style="color:red">{{ object.gender | default:"-" | default_if_none:"-" | upper }}</th>
@@ -35,7 +39,9 @@
               <tr>
                 <th>{{ forloop.counter }}</th>
                 <th>{{ object.id | default:"-" | default_if_none:"-" }}</th>
-                <th><a href="{% url 'core:applicant_detail' pk=object.id %}">{{ object.full_name | lower | title | default:"-" | default_if_none:"-" }}</a></th>
+                <th>{{ object.middle_name | lower | title | default:"-" | default_if_none:"-" }}</th>
+                <th><a href="{% url 'core:applicant_detail' pk=object.id %}">{{ object.first_name | lower | title | default:"-" | default_if_none:"-" }}</a></th>
+                <th>{{ object.last_name | lower | title | default:"-" | default_if_none:"-" }}</th>
                 <th>{{ object.birthday | default:"-" | default_if_none:"-" | date }}</th>
                 <th>{{ object.health_status | default:"-" | default_if_none:"-" }}</th>
                 <th>{{ object.gender | default:"-" | default_if_none:"-" }}</th>

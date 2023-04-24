@@ -4,20 +4,24 @@ from .models import *
 
 
 class ApplicantFilter(FilterSet):
-    # full_name = django_filters.CharFilter(field_name='full_name', lookup_expr='icontains')
+    middle_name = django_filters.CharFilter(field_name='middle_name', lookup_expr='icontains')
+    first_name = django_filters.CharFilter(field_name='first_name', lookup_expr='icontains')
+    last_name = django_filters.CharFilter(field_name='last_name', lookup_expr='icontains')
     phone = django_filters.NumberFilter(field_name='phone', lookup_expr='exact')
     birthday = django_filters.DateFilter(field_name='birthday', lookup_expr='exact')
 
     class Meta:
         model = Applicant
-        fields = ['phone', 'birthday']
+        fields = ['middle_name', 'first_name', 'last_name', 'phone', 'birthday']
 
 
 class AppealFilter(FilterSet):
-    # full_name = django_filters.CharFilter(field_name='applicant__full_name', lookup_expr='icontains')
+    middle_name = django_filters.CharFilter(field_name='applicant__middle_name', lookup_expr='icontains')
+    first_name = django_filters.CharFilter(field_name='applicant__first_name', lookup_expr='icontains')
+    last_name = django_filters.CharFilter(field_name='applicant__last_name', lookup_expr='icontains')
     service_code = django_filters.CharFilter(field_name='emergency_services__service_code', lookup_expr='exact')
     status = django_filters.CharFilter(field_name='status', lookup_expr='exact')
 
     class Meta:
         model = Appeal
-        fields = ['service_code', 'status']
+        fields = ['middle_name', 'first_name', 'last_name', 'service_code', 'status']

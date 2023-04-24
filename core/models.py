@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from .consts import GENDER_CHOICES, STATUS_CHOICES, in_progress, GENDER_MALE
 
@@ -84,6 +86,7 @@ class Appeal(models.Model):
         db_index=True,
         editable=False,
         unique=True,
+        default=uuid.uuid4,
     )
     applicant = models.ForeignKey(  # От одного заявителя может быть много обращений
         Applicant,
@@ -108,7 +111,7 @@ class Appeal(models.Model):
     )
 
     def __str__(self):
-        return str(self.number)
+        return f'{self.number} ({self.applicant.first_name})'
 
     class Meta:
         ordering = ['date', 'number']

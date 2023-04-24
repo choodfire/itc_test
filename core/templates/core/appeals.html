@@ -13,7 +13,9 @@
         <th>Id</th>
         <th>Дата</th>
         <th>Время с обращения</th>
-        <th>Обратившийся</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
         <th>Можно ли звонить</th>
         <th>Статус</th>
         <th>Количество пострадавших</th>
@@ -25,7 +27,9 @@
             <th><a href="{% url 'core:appeal_detail' pk=object.id %}">{{ object.id }}</a></th>
             <th>{{ object.date | date }}</th>
             <th>{{ object.date | timesince }}</th>
+            <th>{{ object.applicant.middle_name }}</th>
             <th>{{ object.applicant.first_name }}</th>
+            <th>{{ object.applicant.last_name }}</th>
             <th>{{ object.do_not_call | yesno }}</th>
             <th>{{ object.status }}</th>
             <th>{{ object.victims_number }}</th>

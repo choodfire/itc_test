@@ -15,8 +15,8 @@ admin.site.register(Appeal, AppealAdmin)
 
 
 class ApplicantAdmin(admin.ModelAdmin):
-    list_display = ('phone', 'health_status', 'get_appeals')
-    # list_editable = ('phone', )
+    list_display = ('middle_name', 'first_name', 'last_name', 'phone', 'health_status', 'get_appeals')
+    list_editable = ('health_status', )
     list_filter = ('phone', )
     search_fields = ('health_status',)
     search_help_text = 'Поиск по состоянию здоровья'
@@ -24,7 +24,10 @@ class ApplicantAdmin(admin.ModelAdmin):
     empty_value_display = '-empty-'
 
     def get_appeals(self, obj):
-        return "Проишествия - " + ", ".join([str(apl) for apl in obj.applicants.all()])
+        appeals_list = obj.appeals.all()
+        if len(appeals_list) == 0:
+            return "Происшествий нет"
+        return "Происшествия - " + ", ".join([str(apl) for apl in appeals_list])
 
 
 admin.site.register(Applicant, ApplicantAdmin)
