@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<h1>Заявитель</h1>
+
+<ul>
+    <li>Фамилия - {{ applicant.middle_name }}</li>
+    <li>Имя - {{ applicant.first_name }}</li>
+    <li>Отчество - {{ applicant.last_name }}</li>
+    <li>День рождения - {{ applicant.birthday }}</li>
+    <li>Номер телефона - {{ applicant.phone }}</li>
+    <li>Состояние здоровья - {{ applicant.health_status }}</li>
+    <li>Пол - {{ applicant.get_gender_display }}</li>
+    {% if applicant.image %}
+        <li>{{ applicant.image }}</li>
+    {% endif %}
+</ul>
+
+
+
+{% endblock content %}

@@ -67,6 +67,9 @@ class Applicant(models.Model):
         null=True,
     )
 
+    def get_gender(self):
+        return self.gender
+
     def __str__(self):
         return f'Заявитель: {self.first_name}'
 

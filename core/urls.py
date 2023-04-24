@@ -9,7 +9,7 @@ urlpatterns = [
     path('third/', views.ThirdView.as_view(), name='third'),
     path('fourth/', views.FourthView.as_view(), name='fourth'),
     path('fifth/', views.FifthView.as_view(), name='fifth'),
-    path('sixth/', views.SixthView.as_view(), name='sixth'),
+    path('sixth/<int:pk>', views.SixthView.as_view(), name='sixth'),
 
     path('appeals/', views.AppealsView.as_view(), name='appeals'),
     path('appeals/create/', views.AppealCreateView.as_view(), name='appeals_create'),

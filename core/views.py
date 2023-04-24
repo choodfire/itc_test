@@ -1,4 +1,4 @@
-from django.shortcuts import get_list_or_404, get_object_or_404, redirect
+from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.generic import TemplateView, DetailView, ListView, UpdateView, CreateView
 import core.filters
@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.db.models import Avg
 from .forms import *
 from .filters import *
+from django.core import serializers
 
 
 class FirstView(TemplateView):
@@ -66,11 +67,14 @@ class FourthView(TemplateView):
 
 
 class FifthView(TemplateView):
-    template_name = 'core/fourth.html'
+    template_name = 'core/fifth.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['data'] = f'''Телефон = {self.request.GET['phone']}, информация = {self.request.GET['data']}'''
+
+        phone = self.request.GET['phone']
+
+        context['applicant'] = Applicant.objects.get(phone__exact=phone)
 
         return context
 
@@ -79,7 +83,8 @@ class SixthView(TemplateView):
     template_name = 'core/sixth.html'
 
     def get(self, request, *args, **kwargs):
-        return JsonResponse({'data': self.request.GET.dict()})
+        data = serializers.serialize('json', [Applicant.objects.get(id=kwargs['pk'])])
+        return JsonResponse({'data': data})
 
 
 class AppealsView(ListView):
