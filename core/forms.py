@@ -9,11 +9,8 @@ class ApplicantForm(forms.ModelForm):
     ),)
 
     def clean(self, *args, **kwargs):
-        full_name = self.cleaned_data.get("full_name")
         birthday = self.cleaned_data.get("birthday")
         phone = self.cleaned_data.get("phone")
-        health_status = self.cleaned_data.get("health_status")
-        gender = self.cleaned_data.get("gender")
 
         if birthday.year > datetime.date.today().year:
             raise forms.ValidationError("Этот год еще не наступил")
@@ -25,7 +22,7 @@ class ApplicantForm(forms.ModelForm):
 
     class Meta:
         model = Applicant
-        fields = ['full_name', 'birthday', 'phone', 'health_status', 'gender', 'image']
+        fields = ['birthday', 'phone', 'health_status', 'gender', 'image']
         widgets = {
             "health_status": forms.Textarea(),
         }

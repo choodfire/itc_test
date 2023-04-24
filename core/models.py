@@ -1,4 +1,5 @@
 from django.db import models
+from .consts import GENDER_CHOICES, STATUS_CHOICES, in_progress, GENDER_MALE
 
 
 class EmergencyService(models.Model):
@@ -8,7 +9,7 @@ class EmergencyService(models.Model):
     )
     service_code = models.CharField(
         'Код службы',
-        max_length=30,
+        max_length=255,
     )
     phone = models.PositiveBigIntegerField(
         'Номер телефона',
@@ -24,8 +25,16 @@ class EmergencyService(models.Model):
 
 
 class Applicant(models.Model):
-    full_name = models.CharField(
-        'ФИО',
+    first_name = models.CharField(
+        "Имя",
+        max_length=255,
+    )
+    middle_name = models.CharField(
+        "Фамилия",
+        max_length=255,
+    )
+    last_name = models.CharField(
+        "Отчество",
         max_length=255,
     )
     birthday = models.DateField(
@@ -34,6 +43,7 @@ class Applicant(models.Model):
     phone = models.PositiveBigIntegerField(
         'Номер телефона',
         null=True,
+        blank=True,
     )
     health_status = models.CharField(
         'Описания состояния здоровья',
@@ -41,25 +51,25 @@ class Applicant(models.Model):
         null=True,
         default='Практически здоров',
         help_text='Аллергоанамнез, хранические заболевания и т.п.',
+        blank=True,
     )
-    GENDER_CHOICES = [
-        ('М', 'Мужской'),
-        ('Ж', 'Женский'),
-    ]
     gender = models.CharField(
-        max_length=1,
+        max_length=255,
         choices=GENDER_CHOICES,
+        default=GENDER_MALE,
     )
     image = models.ImageField(
         'Изображение',
         upload_to='images/',
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
-        return self.full_name
+        return f'Заявитель: {self.first_name}'
 
     class Meta:
-        ordering = ['full_name']
+        ordering = ['first_name']
         verbose_name = 'Заявитель'
         verbose_name_plural = 'Заявители'
 
@@ -69,7 +79,7 @@ class Appeal(models.Model):
         'Дата обращения',
         auto_now=True,
     )
-    number = models.PositiveIntegerField(
+    number = models.UUIDField(
         'Номер обращения',
         db_index=True,
         editable=False,
@@ -78,20 +88,14 @@ class Appeal(models.Model):
     applicant = models.ForeignKey(  # От одного заявителя может быть много обращений
         Applicant,
         on_delete=models.CASCADE,
-        related_name='applicants'
+        related_name='appeals'
     )
     emergency_services = models.ManyToManyField(  # Одно обращение - одна или более экстренных служб
         EmergencyService,
     )
-    in_progress = 'В работе'
-    finished = 'Завершено'
-    STATUS_CHOICES = [
-        (in_progress, in_progress),
-        (finished, finished),
-    ]
     status = models.CharField(
         'Статус обращения',
-        max_length=9,
+        max_length=255,
         choices=STATUS_CHOICES,
         default=in_progress,
     )

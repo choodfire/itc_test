@@ -25,20 +25,25 @@
             <th><a href="{% url 'core:appeal_detail' pk=object.id %}">{{ object.id }}</a></th>
             <th>{{ object.date | date }}</th>
             <th>{{ object.date | timesince }}</th>
-            <th>{{ object.applicant.full_name }}</th>
+            <th>{{ object.applicant.first_name }}</th>
             <th>{{ object.do_not_call | yesno }}</th>
             <th>{{ object.status }}</th>
             <th>{{ object.victims_number }}</th>
             <th>{{ object.number }}</th>
             <th>
-            {% for es in object.emergency_services.all %}
-                {{ es.title | upper }}
-            {% empty %}
-                Службы не назначены
-            {% endfor %}
+            {% if object.emergency_services.all %}
+                {{ object.emergency_services.all | join:", " | upper }}
+            {% else %}
+             <h1>Пусто</h1>
+            {% endif %}
+{#            {% for es in object.emergency_services.all %}#}
+{#                {{ es.title | upper }}#}
+{#            {% empty %}#}
+{#                Службы не назначены#}
+{#            {% endfor %}#}
+{#            {{ object.emergency_services.all }}#}
+
             </th>
-{#            <th>{{ object.emergency_services.all }}</th>#}
-{#            <th>{{ object.emergency_services__title }}</th>#}
           </tr>
       {% empty %}
           <h2>Обращений пока нет</h2>

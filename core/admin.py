@@ -15,16 +15,13 @@ admin.site.register(Appeal, AppealAdmin)
 
 
 class ApplicantAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'phone', 'health_status', 'get_appeals')
-    list_editable = ('phone', )
+    list_display = ('phone', 'health_status', 'get_appeals')
+    # list_editable = ('phone', )
     list_filter = ('phone', )
     search_fields = ('health_status',)
     search_help_text = 'Поиск по состоянию здоровья'
     readonly_fields = ('image',)
     empty_value_display = '-empty-'
-
-    def get_author(self, obj):
-        return "skibididondondon"
 
     def get_appeals(self, obj):
         return "Проишествия - " + ", ".join([str(apl) for apl in obj.applicants.all()])

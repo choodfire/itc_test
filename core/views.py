@@ -9,18 +9,19 @@ from .forms import *
 import datetime
 from .filters import *
 
-class FirstView(TemplateView):
+
+class FirstView(TemplateView):  # Отображает количество происшествий, 404 если их нет
     template_name = 'core/first.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         appeals = get_list_or_404(Appeal)
-        context['lengthh'] = len(appeals)
+        context['length'] = len(appeals)
 
         return context
 
 
-class SecondView(TemplateView):
+class SecondView(TemplateView):  #
     template_name = 'core/second.html'
 
     def get_context_data(self, **kwargs):
@@ -30,14 +31,6 @@ class SecondView(TemplateView):
         context['phone'] = applicant.phone
 
         return context
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     pk = self.request.GET['pk']
-    #     applicant = get_object_or_404(Applicant, pk=pk)
-    #     context['phone'] = applicant.phone
-    #
-    #     return context
 
 
 class ThirdView(TemplateView):
@@ -97,9 +90,6 @@ class AppealsView(ListView):
     def get_queryset(self):
         return self.get_filters().qs
 
-    # def get_queryset(self):
-    #     return Appeal.objects.all().select_related('applicant').prefetch_related('emergency_services')
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['average'] = Appeal.objects.aggregate(Avg('emergency_services'))['emergency_services__avg']
@@ -125,11 +115,9 @@ class ApplicantsView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        filterr = ApplicantFilter(self.request.GET)
-        context['filter'] = filterr
+        context['filter'] = ApplicantFilter(self.request.GET)
 
         return context
-
 
 
 class ApplicantDetailView(DetailView):
@@ -179,27 +167,27 @@ class ServiceUpdateView(UpdateView):
 
 
 class ServiceCreateView(CreateView):
-    form_class = EmergencyServiceForm
-    template_name = 'core/create.html'
     model = EmergencyService
+    template_name = 'core/create.html'
+    form_class = EmergencyServiceForm
 
     def get_success_url(self):
         return reverse('core:services')
 
 
 class ApplicantCreateView(CreateView):
-    form_class = ApplicantForm
-    template_name = 'core/create.html'
     model = Applicant
+    template_name = 'core/create.html'
+    form_class = ApplicantForm
 
     def get_success_url(self):
         return reverse('core:applicants')
 
 
 class AppealCreateView(CreateView):
-    form_class = AppealForm
-    template_name = 'core/create.html'
     model = Appeal
+    template_name = 'core/create.html'
+    form_class = AppealForm
 
     def get_success_url(self):
         return reverse('core:appeals')
