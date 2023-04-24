@@ -30,7 +30,7 @@
             <th>{{ object.applicant.middle_name }}</th>
             <th>{{ object.applicant.first_name }}</th>
             <th>{{ object.applicant.last_name }}</th>
-            <th>{{ object.do_not_call | yesno }}</th>
+            <th>{{ object.do_not_call | yesno:'Да, Нет' }}</th>
             <th>{{ object.status }}</th>
             <th>{{ object.victims_number }}</th>
             <th>{{ object.number }}</th>

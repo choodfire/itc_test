@@ -94,10 +94,12 @@ class Appeal(models.Model):
     applicant = models.ForeignKey(  # От одного заявителя может быть много обращений
         Applicant,
         on_delete=models.CASCADE,
-        related_name='appeals'
+        related_name='appeals',
+        verbose_name='Заявитель',
     )
     emergency_services = models.ManyToManyField(  # Одно обращение - одна или более экстренных служб
         EmergencyService,
+        verbose_name="Экстренные службы",
     )
     status = models.CharField(
         'Статус обращения',
