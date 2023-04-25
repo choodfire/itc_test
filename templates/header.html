@@ -65,17 +65,18 @@
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{% url 'core:first' %}" class="nav-link px-2 text-secondary">Первое</a></li>
-          <li><a href="{% url 'core:second' pk=1 %}" class="nav-link px-2 text-secondary">Второе</a></li>
-          <li><a href="{% url 'core:third' %}" class="nav-link px-2 text-secondary">Третье</a></li>
-          <li><a href="{% url 'core:fourth' %}" class="nav-link px-2 text-secondary">Четвертое</a></li>
-          <li><a href="{% url 'core:fifth' %}?phone=31214" class="nav-link px-2 text-secondary">Пятое</a></li>
-          <li><a href="{% url 'core:sixth' pk=1 %}" class="nav-link px-2 text-secondary">Шестое</a></li>
+          <li><a href="{% url 'core:index' %}" class="nav-link px-2 text-white">Главная</a></li>
+          <li><a href="{% url 'core:first' %}" class="nav-link px-2 text-secondary">Происшествия</a></li>
+          <li><a href="{% url 'core:second' pk=1 %}" class="nav-link px-2 text-secondary">Номер телефона заявителя</a></li>
+          <li><a href="{% url 'core:third' %}" class="nav-link px-2 text-secondary">Перенаправление</a></li>
+          <li><a href="{% url 'core:fourth' %}" class="nav-link px-2 text-secondary">Данные запроса</a></li>
+          <li><a href="{% url 'core:fifth' %}?phone=31214" class="nav-link px-2 text-secondary">Данные заявителя</a></li>
+          <li><a href="{% url 'core:sixth' pk=1 %}" class="nav-link px-2 text-secondary">Данные заявителя в JSON</a></li>
         </ul>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+            Другие страницы
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'core:appeals' %}">Обращения</a></li>

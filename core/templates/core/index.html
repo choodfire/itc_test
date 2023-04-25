@@ -1,19 +1,21 @@
 {% extends 'main.html' %}
 {% block content %}
 
-<h1>Представления:</h1>
+<div class="container">
+    <h1>Представления:</h1>
 
-<p><a href="{% url 'core:first' %}">Первое</a></p>
-<p><a href="{% url 'core:second' pk=1 %}">Второе</a></p>
-<p><a href="{% url 'core:third' %}">Третье</a></p>
-<p><a href="{% url 'core:fourth' %}">Четвертое</a></p>
-<p><a href="{% url 'core:fifth' %}?phone=31214">Пятое</a></p>
-<p><a href="{% url 'core:sixth' pk=1 %}">Шестое</a></p>
+    <p><a href="{% url 'core:first' %}">Первое</a></p>
+    <p><a href="{% url 'core:second' pk=1 %}">Второе</a></p>
+    <p><a href="{% url 'core:third' %}">Третье</a></p>
+    <p><a href="{% url 'core:fourth' %}">Четвертое</a></p>
+    <p><a href="{% url 'core:fifth' %}?phone=31214">Пятое</a></p>
+    <p><a href="{% url 'core:sixth' pk=1 %}">Шестое</a></p>
 
-<h1>Дополнительно:</h1>
+    <h1>Дополнительно:</h1>
 
-<p><a href="{% url 'core:appeals' %}">Объекты обращения</a></p>
-<p><a href="{% url 'core:applicants' %}">Объекты заявителей</a></p>
-<p><a href="{% url 'core:services' %}">Объекты служб</a></p>
+    <p><a href="{% url 'core:appeals' %}">Объекты обращения</a></p>
+    <p><a href="{% url 'core:applicants' %}">Объекты заявителей</a></p>
+    <p><a href="{% url 'core:services' %}">Объекты служб</a></p>
+</div>
 
 {% endblock content %}

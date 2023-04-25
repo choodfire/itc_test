@@ -1,21 +1,23 @@
 {% extends 'main.html' %}
 {% block content %}
 
-<table>
-  <tr>
-    <th>Id</th>
-    <th>Название</th>
-    <th>Код службы</th>
-    <th>Телефон</th>
-  </tr>
-    <tr>
-        <th>{{ object.id }}</th>
-        <th>{{ object.title }}</th>
-        <th>{{ object.service_code }}</th>
-        <th>{{ object.phone }}</th>
-    </tr>
-</table>
+<div class="container">
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Название</th>
+        <th>Код службы</th>
+        <th>Телефон</th>
+      </tr>
+        <tr>
+            <th>{{ object.id }}</th>
+            <th>{{ object.title }}</th>
+            <th>{{ object.service_code }}</th>
+            <th>{{ object.phone }}</th>
+        </tr>
+    </table>
 
-<a href="{% url 'core:service_update' pk=object.id %}">Изменить экстренную службу</a>
+    <a href="{% url 'core:service_update' pk=object.id %}">Изменить экстренную службу</a>
+</div>
 
 {% endblock content %}

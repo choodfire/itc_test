@@ -1,65 +1,67 @@
 {% extends 'main.html' %}
 {% block content %}
 
-<form method="get">
-        {{ filter.form.as_p }}
-        <input type="submit" />
-</form>
+<div class="container">
+    <form method="get">
+            {{ filter.form.as_p }}
+            <input type="submit" />
+    </form>
 
-{% if object_list.count > 0 %}
-    <h1>Обращения</h1>
-    <table>
-      <tr>
-        <th>Id</th>
-        <th>Дата</th>
-        <th>Время с обращения</th>
-        <th>Фамилия</th>
-        <th>Имя</th>
-        <th>Отчество</th>
-        <th>Можно ли звонить</th>
-        <th>Статус</th>
-        <th>Количество пострадавших</th>
-        <th>Номер</th>
-        <th>Назначенные службы</th>
-      </tr>
-      {% for object in object_list %}
+    {% if object_list.count > 0 %}
+        <h1>Обращения</h1>
+        <table>
           <tr>
-            <th><a href="{% url 'core:appeal_detail' pk=object.id %}">{{ object.id }}</a></th>
-            <th>{{ object.date | date }}</th>
-            <th>{{ object.date | timesince }}</th>
-            <th>{{ object.applicant.middle_name }}</th>
-            <th>{{ object.applicant.first_name }}</th>
-            <th>{{ object.applicant.last_name }}</th>
-            <th>{{ object.do_not_call | yesno:'Да, Нет' }}</th>
-            <th>{{ object.status }}</th>
-            <th>{{ object.victims_number }}</th>
-            <th>{{ object.number }}</th>
-            <th>
-            {% if object.emergency_services.all %}
-                {{ object.emergency_services.all | join:", " | upper }}
-            {% else %}
-             <h1>Пусто</h1>
-            {% endif %}
-{#            {% for es in object.emergency_services.all %}#}
-{#                {{ es.title | upper }}#}
-{#            {% empty %}#}
-{#                Службы не назначены#}
-{#            {% endfor %}#}
-{#            {{ object.emergency_services.all }}#}
-
-            </th>
+            <th>Id</th>
+            <th>Дата</th>
+            <th>Время с обращения</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Можно ли звонить</th>
+            <th>Статус</th>
+            <th>Количество пострадавших</th>
+            <th>Номер</th>
+            <th>Назначенные службы</th>
           </tr>
-      {% empty %}
-          <h2>Обращений пока нет</h2>
-      {% endfor %}
-    </table>
+          {% for object in object_list %}
+              <tr>
+                <th><a href="{% url 'core:appeal_detail' pk=object.id %}">{{ object.id }}</a></th>
+                <th>{{ object.date | date }}</th>
+                <th>{{ object.date | timesince }}</th>
+                <th>{{ object.applicant.middle_name }}</th>
+                <th>{{ object.applicant.first_name }}</th>
+                <th>{{ object.applicant.last_name }}</th>
+                <th>{{ object.do_not_call | yesno:'Да, Нет' }}</th>
+                <th>{{ object.status }}</th>
+                <th>{{ object.victims_number }}</th>
+                <th>{{ object.number }}</th>
+                <th>
+                {% if object.emergency_services.all %}
+                    {{ object.emergency_services.all | join:", " | upper }}
+                {% else %}
+                 <h1>Пусто</h1>
+                {% endif %}
+    {#            {% for es in object.emergency_services.all %}#}
+    {#                {{ es.title | upper }}#}
+    {#            {% empty %}#}
+    {#                Службы не назначены#}
+    {#            {% endfor %}#}
+    {#            {{ object.emergency_services.all }}#}
 
-    <h3>Среднее количество вызванных служб - {{ average | floatformat:'0' }}</h3>
-    <h3>Количество обращений - {{ object_list | length }}</h3>
-{% else %}
-    <h1>Нет обращений</h1>
-{% endif %}
+                </th>
+              </tr>
+          {% empty %}
+              <h2>Обращений пока нет</h2>
+          {% endfor %}
+        </table>
 
-<a href="{% url 'core:appeals_create'%}">Создать обращение</a>
+        <h3>Среднее количество вызванных служб - {{ average | floatformat:'0' }}</h3>
+        <h3>Количество обращений - {{ object_list | length }}</h3>
+    {% else %}
+        <h1>Нет обращений</h1>
+    {% endif %}
+
+    <a href="{% url 'core:appeals_create'%}">Создать обращение</a>
+</div>
 
 {% endblock content %}
