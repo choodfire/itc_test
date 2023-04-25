@@ -173,7 +173,7 @@ Applicant.objects.exists()
 7. Узнать, есть ли какие нибудь заявители с похожими именами (пример: Алексей, Александра)
 
 ```
-Applicant.objects.filter(first_name__contains='алекс')
+Applicant.objects.filter(first_name__contains='Алекс')
 ```
 
 8. Получить все обращения, кроме тех, у которых не назначены службы
@@ -235,7 +235,7 @@ Applicant.objects.filter(phone__isnull=True).count()  # Либо phone=""
 Applicant.objects.distinct()
 ```
 
-17. Получить все обращения, в описании которых есть какое то ключевое слово в любом регистре номер
+17. Получить все обращения, в описании которых есть какое то ключевое слово в любом регистре
 
 ```
 Appeal.objects.filter(status__isnull=False)  # ~status=""
@@ -244,7 +244,7 @@ Appeal.objects.filter(status__isnull=False)  # ~status=""
 18. Выбрать всех заявителей, при этом получить только значения поля "номер телефона"
 
 ```
-Applicant.objects.all().values('phone')
+Applicant.objects.all().values('phone')  # values_list
 ```
 
 19. Выбрать всех заявителей, при этом получить все поля, кроме состояния здоровья 

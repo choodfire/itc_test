@@ -56,6 +56,7 @@ class Applicant(models.Model):
         blank=True,
     )
     gender = models.CharField(
+        'Пол',
         max_length=255,
         choices=GENDER_CHOICES,
         default=GENDER_MALE,
