@@ -1,10 +1,11 @@
 {% extends 'main.html' %}
 {% block content %}
+{% load bootstrap5 %}
 
 <div class="container">
     <form method="get">
-            {{ filter.form.as_p }}
-            <input type="submit" />
+        {% bootstrap_form filter.form %}
+        <input type="submit" />
     </form>
 
     {% if object_list.count > 0 %}
@@ -41,13 +42,6 @@
                 {% else %}
                  <h1>Пусто</h1>
                 {% endif %}
-    {#            {% for es in object.emergency_services.all %}#}
-    {#                {{ es.title | upper }}#}
-    {#            {% empty %}#}
-    {#                Службы не назначены#}
-    {#            {% endfor %}#}
-    {#            {{ object.emergency_services.all }}#}
-
                 </th>
               </tr>
           {% empty %}

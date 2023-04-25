@@ -28,15 +28,15 @@ class EmergencyService(models.Model):
 
 class Applicant(models.Model):
     first_name = models.CharField(
-        "Имя",
+        'Имя',
         max_length=255,
     )
     middle_name = models.CharField(
-        "Фамилия",
+        'Фамилия',
         max_length=255,
     )
     last_name = models.CharField(
-        "Отчество",
+        'Отчество',
         max_length=255,
     )
     birthday = models.DateField(
@@ -50,7 +50,6 @@ class Applicant(models.Model):
     health_status = models.CharField(
         'Описания состояния здоровья',
         max_length=255,
-        null=True,
         default='Практически здоров',
         help_text='Аллергоанамнез, хранические заболевания и т.п.',
         blank=True,
@@ -83,7 +82,7 @@ class Applicant(models.Model):
 class Appeal(models.Model):
     date = models.DateField(
         'Дата обращения',
-        auto_now=True,
+        auto_now_add=True,
     )
     number = models.UUIDField(
         'Номер обращения',
@@ -100,7 +99,7 @@ class Appeal(models.Model):
     )
     emergency_services = models.ManyToManyField(  # Одно обращение - одна или более экстренных служб
         EmergencyService,
-        verbose_name="Экстренные службы",
+        verbose_name='Экстренные службы',
     )
     status = models.CharField(
         'Статус обращения',
