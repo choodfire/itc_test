@@ -14,8 +14,8 @@ es2 = EmergencyService(title="Скорая помощь", service_code='03', pho
 es2.save()
 EmergencyService.objects.create(title="Пожарная", service_code='01', phone='01')
 
-Applicant.objects.create(full_name='Иванов Иван Иванович', birthday=datetime.date(2002, 8, 26), gender='M')
-apl = Applicant(full_name='Дмитриев Дмитрий Дмитриевич', birthday=datetime.date(1995, 1, 26), gender='М', health_status='Полностью здоров', phone=88005553535)
+Applicant.objects.create(first_name='Руслан', middle_name='Русланов', last_name='Русланович', birthday=datetime.date(2002, 8, 26), gender='M')
+apl = Applicant(first_name='Дмитрий', middle_name='Дмитриев', last_name='Дмитриевич', birthday=datetime.date(1995, 1, 26), gender='М', health_status='Полностью здоров', phone=88005553535)
 apl.save()
 
 Appeal.objects.create(applicant_id=1, number=1, status='В работе', victims_number=1, do_not_call=True)
@@ -27,7 +27,7 @@ appeal.save()
 
 ```
 a = Applicant.objects.get(id=1)
-e = a.applicants.create(do_not_call=False, status='Завершено', victims_number=123, number=3)
+e = a.appeals.create(do_not_call=False, status='Завершено', victims_number=123, number=3)
 ```
 
 3. Добавьте "Обращению" несколько "экстренных служб" двумя способами (add, set)
@@ -61,7 +61,7 @@ Applicant.objects.get(pk=1)
 a = Applicant.objects.get(id=1)
 
 1. Appeal.objects.filter(applicant=a)
-2. a.applicants.all()
+2. a.appeals.all()
 ```
 
 3. Получить первые три экстренные службы
@@ -143,7 +143,7 @@ Appeal.objects.filter(applicant_id=1)  # .first если одно
 2. Получить всех заявителей определенного пола и без обращений
 
 ```
-Applicant.objects.filter(gender='М', applicants__isnull=True)
+Applicant.objects.filter(gender='М', appeals__isnull=True)
 ```
 
 3. Отсортировать всех заявителей по идентификатору
@@ -173,7 +173,7 @@ Applicant.objects.exists()
 7. Узнать, есть ли какие нибудь заявители с похожими именами (пример: Алексей, Александра)
 
 ```
-Applicant.objects.filter(full_name__contains='алекс')
+Applicant.objects.filter(first_name__contains='алекс')
 ```
 
 8. Получить все обращения, кроме тех, у которых не назначены службы
@@ -276,8 +276,8 @@ Applicant.objects.update_or_create(phone=12341234, defaults={"phone": 1234})
 ```
 objs = Applicant.objects.bulk_create(
     [
-        Applicant(full_name="Максимов Максим Максимович", birthday=datetime.date(1976, 10, 9), gender='М', phone=123456),
-        Applicant(full_name="Романов Роман Романович", birthday=datetime.date(2001, 10, 9), gender='М', phone=87654),
+        Applicant(first_name='Максим', middle_name='Максимов', last_name='Максимович', birthday=datetime.date(1976, 10, 9), gender='М', phone=123456),
+        Applicant(first_name='Роман', middle_name='Романов', last_name='Романович', birthday=datetime.date(2001, 10, 9), gender='М', phone=87654),
     ]
 )
 ```
@@ -298,7 +298,7 @@ Applicant.objects.bulk_update(applicants, ['health_status'])
 25. Выведите имя заявителя у какого-либо обращения. Убедитесь, что было сделано не более одного запроса.
 
 ```
-Appeal.objects.order_by('?').values_list('applicant__full_name', flat=True).first()
+Appeal.objects.order_by('?').values_list('applicant__first_name', flat=True).first()
 ```
 
 26. Выведите список всех обращений с указанием списка задействованных экстренных служб в следующем формате: " обращения:, список кодов служб:. Убедитесь, что было сделано не более двух запросов в БД.
@@ -373,9 +373,9 @@ Appeal.objects.aggregate(Min('victims_number'))
 34. Сформировать запрос к модели заявитель, в котором будет добавлено поле с количеством обращений каждого заявителя.
 
 ```
-apl = Applicant.objects.annotate(amount = Count('applicants'))
+apl = Applicant.objects.annotate(amount = Count('appeals'))
 for a in apl:
-    print(f'{a.full_name} - {a.amount}')
+    print(f'{a.first_name} - {a.amount}')
 ```
 
 ### Дополнительно
