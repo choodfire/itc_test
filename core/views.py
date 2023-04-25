@@ -103,6 +103,9 @@ class ApplicantDataJSONView(TemplateView):
 
 
 class AppealsView(ListView):
+    """
+    Отображает список заявлений
+    """
     model = Appeal
     template_name = 'core/appeals.html'
 
@@ -121,11 +124,17 @@ class AppealsView(ListView):
 
 
 class AppealDetailView(DetailView):
+    """
+    Отображает данные о заявлении
+    """
     model = Appeal
     template_name = 'core/appeal_detail.html'
 
 
 class ApplicantsView(ListView):
+    """
+    Отображает список заявителей
+    """
     model = Applicant
     template_name = 'core/applicants.html'
 
@@ -143,25 +152,40 @@ class ApplicantsView(ListView):
 
 
 class ApplicantDetailView(DetailView):
+    """
+    Отображает данные о заявителе
+    """
     model = Applicant
     template_name = 'core/applicant_detail.html'
 
 
 class ServicesView(ListView):
+    """
+    Отображает список экстренных служб
+    """
     model = EmergencyService
     template_name = 'core/services.html'
 
 
 class ServiceDetailView(DetailView):
+    """
+    Отображает данные об экстренной службе
+    """
     model = EmergencyService
     template_name = 'core/service_detail.html'
 
 
 class Index(TemplateView):
+    """
+    Главная страница
+    """
     template_name = 'core/index.html'
 
 
 class AppealUpdateView(UpdateView):
+    """
+    Страница изменения заявления
+    """
     model = Appeal
     template_name = 'core/update.html'
     form_class = AppealForm
@@ -171,6 +195,9 @@ class AppealUpdateView(UpdateView):
 
 
 class ApplicantUpdateView(UpdateView):
+    """
+    Страница изменения заявителя
+    """
     model = Applicant
     template_name = 'core/update.html'
     form_class = ApplicantForm
@@ -180,6 +207,9 @@ class ApplicantUpdateView(UpdateView):
 
 
 class ServiceUpdateView(UpdateView):
+    """
+    Страница изменения службы
+    """
     model = EmergencyService
     template_name = 'core/update.html'
     form_class = EmergencyServiceForm
@@ -189,6 +219,9 @@ class ServiceUpdateView(UpdateView):
 
 
 class ServiceCreateView(CreateView):
+    """
+    Страница создания службы
+    """
     model = EmergencyService
     template_name = 'core/create.html'
     form_class = EmergencyServiceForm
@@ -198,6 +231,9 @@ class ServiceCreateView(CreateView):
 
 
 class ApplicantCreateView(CreateView):
+    """
+    Страница создания заявителя
+    """
     model = Applicant
     template_name = 'core/create.html'
     form_class = ApplicantForm
@@ -207,6 +243,9 @@ class ApplicantCreateView(CreateView):
 
 
 class AppealCreateView(CreateView):
+    """
+    Страница создания заявленяи
+    """
     model = Appeal
     template_name = 'core/create.html'
     form_class = AppealForm
